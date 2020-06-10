@@ -9,6 +9,8 @@ class AuthRepository constructor(
     val authTokenDao: AuthTokenDao,
     val accountPropertiesDao: AccountPropertiesDao,
     val openApiAuthService: OpenApiAuthService,
-    val sessionManager: SessionManager
-){
+    val sessionManager: SessionManager){
+
+
+
 }

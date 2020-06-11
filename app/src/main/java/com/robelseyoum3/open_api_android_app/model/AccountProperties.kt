@@ -13,20 +13,15 @@ data class AccountProperties(
     @SerializedName("pk")
     @Expose
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "pk")
-    var pk: Int,
+    @ColumnInfo(name = "pk") var pk: Int,
 
     @SerializedName("email")
     @Expose
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "email")
-    var email: String,
+    @ColumnInfo(name = "email") var email: String,
 
     @SerializedName("username")
     @Expose
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "username")
-    var username: String
+    @ColumnInfo(name = "username") var username: String
 
 )
 

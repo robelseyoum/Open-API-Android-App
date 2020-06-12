@@ -27,25 +27,11 @@ class LoginFragment : BaseAuthFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "LoginFragment: ${viewModel.hashCode()}")
+        subscribeObservers()
+    }
 
-        viewModel.testLogin().observe(viewLifecycleOwner, Observer { response ->
+    private fun subscribeObservers() {
 
-            when(response){
-
-                is ApiSuccessResponse -> {
-                    Log.d(TAG, "LOGIN RESPONSE: ${response.body}")
-                }
-
-                is ApiErrorResponse -> {
-                    Log.d(TAG, "LOGIN RESPONSE: ${response.errorMessage}")
-                }
-
-                is ApiEmptyResponse -> {
-                    Log.d(TAG, "LOGIN RESPONSE: Empty Response")
-                }
-            }
-
-        })
     }
 
 

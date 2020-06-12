@@ -28,28 +28,12 @@ class RegisterFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d(TAG, "RegisterFragment:  ${viewModel.hashCode()} ")
-
-
-        viewModel.testRegister().observe(viewLifecycleOwner, Observer { response ->
-
-            when(response){
-
-                is ApiSuccessResponse -> {
-                    Log.d(TAG, "REGISTRATION RESPONSE: ${response.body}")
-                }
-
-                is ApiErrorResponse -> {
-                    Log.d(TAG, "REGISTRATION RESPONSE: ${response.errorMessage}")
-                }
-
-                is ApiEmptyResponse -> {
-                    Log.d(TAG, "REGISTRATION RESPONSE: Empty Response")
-                }
-            }
-
-        })
+        subscribeObservers()
     }
 
+    private fun subscribeObservers() {
+
+    }
 
 
 }

@@ -25,7 +25,7 @@ class AuthRepository constructor(
         username: String,
         password: String,
         confirmPassword: String
-    ): LiveData<GenericApiResponse<RegistrationResponse>>{
+    ): LiveData<GenericApiResponse<RegistrationResponse>> {
         return openApiAuthService.register(email, username, password, confirmPassword)
     }
 

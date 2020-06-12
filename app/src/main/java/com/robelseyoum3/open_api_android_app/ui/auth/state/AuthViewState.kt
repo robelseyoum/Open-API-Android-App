@@ -5,7 +5,7 @@ import com.robelseyoum3.open_api_android_app.model.AuthToken
 data class AuthViewState(
     var registrationFields: RegistrationFields? = RegistrationFields(),
     var loginField: LoginFields? = LoginFields(),
-    var authToken: AuthToken? = null //once authtoken obtained then user is authenticated
+    var authToken: AuthToken? = null //once authtoken obtained then user is authenticatied
 )
 
 

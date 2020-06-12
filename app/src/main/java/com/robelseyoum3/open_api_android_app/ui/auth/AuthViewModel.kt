@@ -22,18 +22,18 @@ class AuthViewModel @Inject constructor(
 ) : BaseViewModel<AuthStateEvent, AuthViewState>() {
 
     override fun handleStateEvent(stateEvent: AuthStateEvent): LiveData<DataState<AuthViewState>> {
-        when(stateEvent){
+        return when(stateEvent){
 
             is LoginAttemptEvent -> {
-                return AbsentLiveData.create()
+                AbsentLiveData.create()
             }
 
             is RegisterAttemptEvent -> {
-                return AbsentLiveData.create()
+                AbsentLiveData.create()
             }
 
             is CheckPreviousAuthEvent -> {
-                return AbsentLiveData.create()
+                AbsentLiveData.create()
             }
         }
     }
@@ -45,22 +45,28 @@ class AuthViewModel @Inject constructor(
     fun setRegistrationFields(registrationFields: RegistrationFields){
         val update = getCurrentViewStateOrNew()
         if(update.registrationFields == registrationFields){
-            _viewState.value = update
+            return
         }
+        update.registrationFields = registrationFields
+        _viewState.value = update
     }
 
     fun setLoginField(loginFields: LoginFields){
         val update = getCurrentViewStateOrNew()
         if(update.loginField == loginFields){
-            _viewState.value = update
+            return
         }
+        update.loginField = loginFields
+        _viewState.value = update
     }
 
     fun setAuthToken(authToken: AuthToken){
         val update = getCurrentViewStateOrNew()
         if(update.authToken == authToken){
-            _viewState.value = update
+            return
         }
+        update.authToken = authToken
+        _viewState.value = update
     }
 
 }

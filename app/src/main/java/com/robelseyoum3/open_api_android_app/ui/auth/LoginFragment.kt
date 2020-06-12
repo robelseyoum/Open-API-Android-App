@@ -10,9 +10,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 
 import com.robelseyoum3.open_api_android_app.R
+import com.robelseyoum3.open_api_android_app.ui.auth.state.LoginFields
 import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
 import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
 import com.robelseyoum3.open_api_android_app.util.ApiSuccessResponse
+import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseAuthFragment() {
 
@@ -31,8 +33,23 @@ class LoginFragment : BaseAuthFragment() {
     }
 
     private fun subscribeObservers() {
-
+        viewModel.viewState.observe(viewLifecycleOwner, Observer { it ->
+            it.loginField?.let { loginFields ->
+                loginFields.login_email?.let { email -> input_email.setText(email) }
+                loginFields.login_password?.let { password -> input_password.setText(password) }
+            }
+        })
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.setLoginField(
+            LoginFields(
+                input_email.text.toString(),
+                input_password.text.toString()
+            )
+        )
+    }
 
 }

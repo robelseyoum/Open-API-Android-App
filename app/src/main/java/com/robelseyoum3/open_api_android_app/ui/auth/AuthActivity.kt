@@ -1,9 +1,13 @@
 package com.robelseyoum3.open_api_android_app.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
+import com.robelseyoum3.open_api_android_app.ui.main.MainActivity
 import com.robelseyoum3.open_api_android_app.viewmodels.ViewModelProviderFactory
 import javax.inject.Inject
 
@@ -20,6 +24,31 @@ class AuthActivity : BaseActivity() {
 
         viewModel = ViewModelProvider(this, providerFactory).get(AuthViewModel::class.java)
 
+        subscribeObservers()
+
+    }
+
+    private fun subscribeObservers() {
+
+        viewModel.viewState.observe(this, Observer { it ->
+            it.authToken?.let { authToken ->
+                sessionManager.login(authToken) }
+        })
+
+        sessionManager.cachedToken.observe(this, Observer { authToken ->
+            Log.d(TAG, "AuthActivity, subscribeObservers: ViewState: $authToken")
+
+            if(authToken != null && authToken.account_pk != -1 && authToken.token != null)
+            {
+                navMainActivity()
+            }
+        })
+    }
+
+    private fun navMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

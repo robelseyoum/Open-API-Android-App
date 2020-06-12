@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 
 import com.robelseyoum3.open_api_android_app.R
+import com.robelseyoum3.open_api_android_app.model.AuthToken
 import com.robelseyoum3.open_api_android_app.ui.auth.state.LoginFields
 import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
 import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
@@ -29,7 +30,13 @@ class LoginFragment : BaseAuthFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "LoginFragment: ${viewModel.hashCode()}")
+
+//        login_button.setOnClickListener {
+//            viewModel.setAuthToken(AuthToken(1, "gigisfrere"))
+//        }
+
         subscribeObservers()
+
     }
 
     private fun subscribeObservers() {

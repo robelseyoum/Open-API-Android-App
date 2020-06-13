@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.model.AuthToken
+import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
+import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent.*
 import com.robelseyoum3.open_api_android_app.ui.auth.state.LoginFields
 import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
 import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
@@ -31,9 +33,10 @@ class LoginFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "LoginFragment: ${viewModel.hashCode()}")
 
-//        login_button.setOnClickListener {
+        login_button.setOnClickListener {
 //            viewModel.setAuthToken(AuthToken(1, "gigisfrere"))
-//        }
+            login()
+        }
 
         subscribeObservers()
 
@@ -46,6 +49,15 @@ class LoginFragment : BaseAuthFragment() {
                 loginFields.login_password?.let { password -> input_password.setText(password) }
             }
         })
+    }
+
+    fun login() {
+        viewModel.setStateEvent(
+            LoginAttemptEvent (
+                input_email.text.toString(),
+                input_password.text.toString()
+            )
+        )
     }
 
 

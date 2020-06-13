@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import com.robelseyoum3.open_api_android_app.R
+import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
 import com.robelseyoum3.open_api_android_app.ui.auth.state.RegistrationFields
 import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
 import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
@@ -28,8 +29,12 @@ class RegisterFragment : BaseAuthFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Log.d(TAG, "RegisterFragment:  ${viewModel.hashCode()} ")
+
+        register_button.setOnClickListener {
+            register()
+        }
+
         subscribeObservers()
     }
 
@@ -44,6 +49,17 @@ class RegisterFragment : BaseAuthFragment() {
             }
         })
 
+    }
+
+    fun register(){
+        viewModel.setStateEvent(
+            AuthStateEvent.RegisterAttemptEvent(
+                input_email.text.toString(),
+                input_username.text.toString(),
+                input_password.text.toString(),
+                input_password_confirm.text.toString()
+            )
+        )
     }
 
     //here when we leave this fragment and come back it will retain the value from textbox

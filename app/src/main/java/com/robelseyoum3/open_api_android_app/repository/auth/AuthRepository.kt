@@ -123,7 +123,7 @@ class AuthRepository constructor(
                 super.onActive()
                 value = DataState.error(
                     Response(
-                        loginFieldError,
+                        fieldsError,
                         responseType
                     )
                 )

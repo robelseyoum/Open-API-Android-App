@@ -3,6 +3,7 @@ package com.robelseyoum3.open_api_android_app.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
@@ -39,4 +40,13 @@ class MainActivity : BaseActivity(){
         startActivity(intent)
         finish()
     }
+
+    override fun displayProgressBar(boolean: Boolean) {
+        if(boolean){
+            progress_bar.visibility = View.VISIBLE
+        } else {
+            progress_bar.visibility = View.INVISIBLE
+        }
+    }
+
 }

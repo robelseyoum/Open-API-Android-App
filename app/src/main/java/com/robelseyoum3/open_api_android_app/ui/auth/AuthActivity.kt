@@ -3,6 +3,7 @@ package com.robelseyoum3.open_api_android_app.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -10,9 +11,10 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
-import com.robelseyoum3.open_api_android_app.ui.ResponseType
 import com.robelseyoum3.open_api_android_app.ui.main.MainActivity
 import com.robelseyoum3.open_api_android_app.viewmodels.ViewModelProviderFactory
+import kotlinx.android.synthetic.main.activity_auth.progress_bar
+
 import javax.inject.Inject
 
 class AuthActivity : BaseActivity(),
@@ -38,6 +40,7 @@ class AuthActivity : BaseActivity(),
 
         viewModel.dataState.observe(this, Observer { dataState ->
 
+
             dataState.data?.let { data ->
 
                 data.data?.let { event ->
@@ -48,27 +51,9 @@ class AuthActivity : BaseActivity(),
                          }
                     }
                 }
-
-                data.response?.let { event ->
-                    event.getContentIfNotHandled()?.let {
-                        when(it.responseType){
-
-                            is ResponseType.Dialog -> {
-                                //inflate error dialog
-                            }
-
-                            is ResponseType.Toast -> {
-                                // show toast
-                            }
-
-                            is ResponseType.None -> {
-                                Log.d(TAG, "AuthActivity, Response: ${it.message}")
-                            }
-                        }
-                    }
-                }
             }
 
+            onDataStateChange(dataState)
         })
 
         viewModel.viewState.observe(this, Observer { it ->
@@ -98,6 +83,14 @@ class AuthActivity : BaseActivity(),
         arguments: Bundle?
     ) {
         viewModel.cancelActiveJobs()
+    }
+
+    override fun displayProgressBar(boolean: Boolean) {
+        if(boolean){
+            progress_bar.visibility = View.VISIBLE
+        } else {
+            progress_bar.visibility = View.GONE
+        }
     }
 
 }

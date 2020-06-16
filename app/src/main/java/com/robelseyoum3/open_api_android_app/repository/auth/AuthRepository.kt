@@ -227,8 +227,9 @@ class AuthRepository constructor(
                             if(accountProperties.pk > -1)
                             {
                                 authTokenDao.searchByPk(accountProperties.pk).let { authToken ->
-                                    if(authToken != null) {
-                                        if(authToken.token != null){
+
+                                        authToken?.let{
+                                            authToken.token?.let{
                                             onCompleteJob(
                                                 DataState.data(
                                                     data = AuthViewState(

@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import com.robelseyoum3.open_api_android_app.model.AuthToken
 import com.robelseyoum3.open_api_android_app.persistence.AuthTokenDao
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -42,21 +44,26 @@ class SessionManager @Inject constructor(
     }
 
     fun logout() {
-        var errorMessage: String? = null
         Log.d(TAG, "logout: ")
-        try{
-            _cachedToken.value!!.account_pk?.let { authTokenDao.nullifyToken(it)
-            }?: throw CancellationException("Token Error, Logging out user.")
-        }catch (e: CancellationException) {
-            Log.e(TAG, "logout: ${e.message}")
-            errorMessage = e.message
-        } catch (e: Exception) {
-            Log.d(TAG, "logout: ${e.message}")
-           errorMessage = errorMessage + "\n" + e.message
-        } finally {
-            errorMessage?.let { Log.e(TAG, "logout: $errorMessage") }
-            Log.d(TAG, "logout: finally")
-            setValue(null)
+
+        CoroutineScope(IO).launch {
+            var errorMessage: String? = null
+
+            try {
+                _cachedToken.value!!.account_pk?.let {
+                    authTokenDao.nullifyToken(it)
+                } ?: throw CancellationException("Token Error, Logging out user.")
+            } catch (e: CancellationException) {
+                Log.e(TAG, "logout: ${e.message}")
+                errorMessage = e.message
+            } catch (e: Exception) {
+                Log.d(TAG, "logout: ${e.message}")
+                errorMessage = errorMessage + "\n" + e.message
+            } finally {
+                errorMessage?.let { Log.e(TAG, "logout: $errorMessage") }
+                Log.d(TAG, "logout: finally")
+                setValue(null)
+            }
         }
     }
 

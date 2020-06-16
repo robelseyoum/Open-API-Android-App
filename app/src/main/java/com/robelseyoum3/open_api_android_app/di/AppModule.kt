@@ -1,6 +1,8 @@
 package com.robelseyoum3.open_api_android_app.di
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -14,6 +16,7 @@ import com.robelseyoum3.open_api_android_app.persistence.AppDatabase.Companion.D
 import com.robelseyoum3.open_api_android_app.persistence.AuthTokenDao
 import com.robelseyoum3.open_api_android_app.util.Constants
 import com.robelseyoum3.open_api_android_app.util.LiveDataCallAdapterFactory
+import com.robelseyoum3.open_api_android_app.util.PreferenceKeys
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -23,6 +26,19 @@ import javax.inject.Singleton
 @Module
 class AppModule{
 
+
+    //SharedPreferences instance
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(application: Application): SharedPreferences {
+        return application.getSharedPreferences(PreferenceKeys.APP_PREFERENCES, Context.MODE_PRIVATE)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSharedPrefsEditor(sharedPreferences: SharedPreferences): SharedPreferences.Editor{
+        return sharedPreferences.edit()
+    }
 
     @Singleton
     @Provides

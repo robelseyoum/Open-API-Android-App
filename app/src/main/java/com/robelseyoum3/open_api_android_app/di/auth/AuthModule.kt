@@ -1,5 +1,6 @@
 package com.robelseyoum3.open_api_android_app.di.auth
 
+import android.content.SharedPreferences
 import com.robelseyoum3.open_api_android_app.api.auth.OpenApiAuthService
 import com.robelseyoum3.open_api_android_app.persistence.AccountPropertiesDao
 import com.robelseyoum3.open_api_android_app.persistence.AuthTokenDao
@@ -24,16 +25,20 @@ class AuthModule{
     @AuthScope
     @Provides
     fun provideAuthRepository(
-        sessionManager: SessionManager,
         authTokenDao: AuthTokenDao,
         accountPropertiesDao: AccountPropertiesDao,
-        openApiAuthService: OpenApiAuthService
+        openApiAuthService: OpenApiAuthService,
+        sessionManager: SessionManager,
+        sharedPreferences: SharedPreferences,
+        sharedPrefsEditor: SharedPreferences.Editor
     ): AuthRepository {
         return AuthRepository(
             authTokenDao,
             accountPropertiesDao,
             openApiAuthService,
-            sessionManager
+            sessionManager,
+            sharedPreferences,
+            sharedPrefsEditor
         )
     }
 

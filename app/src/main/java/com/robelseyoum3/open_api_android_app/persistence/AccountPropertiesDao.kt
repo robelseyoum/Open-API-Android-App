@@ -15,12 +15,13 @@ interface AccountPropertiesDao {
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertOnIgnore(accountProperties: AccountProperties)
+    fun insertOnIgnore(accountProperties: AccountProperties): Long
 
     @Query("SELECT * FROM account_properties WhERE pk = :pk")
-    fun searchByPk(pk: Int) : AccountProperties
+    fun searchByPk(pk: Int) : LiveData<AccountProperties>
+
 
     @Query("SELECT * FROM account_properties WhERE email = :email")
-    fun searchByEmail(email: String) : AccountProperties?
+    suspend fun searchByEmail(email: String) : AccountProperties?
 
 }

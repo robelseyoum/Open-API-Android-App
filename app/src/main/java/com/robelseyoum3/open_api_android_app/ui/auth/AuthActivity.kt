@@ -11,6 +11,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
+import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
 import com.robelseyoum3.open_api_android_app.ui.main.MainActivity
 import com.robelseyoum3.open_api_android_app.viewmodels.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_auth.progress_bar
@@ -31,9 +32,11 @@ class AuthActivity : BaseActivity(),
         setContentView(R.layout.activity_auth)
 
         viewModel = ViewModelProvider(this, providerFactory).get(AuthViewModel::class.java)
-        findNavController(R.id.auth_nav_host_fragment).addOnDestinationChangedListener(this)
-        subscribeObservers()
 
+        findNavController(R.id.auth_nav_host_fragment).addOnDestinationChangedListener(this)
+
+        checkPreviousAuthUser()
+        subscribeObservers()
     }
 
     private fun subscribeObservers() {
@@ -71,6 +74,9 @@ class AuthActivity : BaseActivity(),
         })
     }
 
+    fun checkPreviousAuthUser(){
+        viewModel.setStateEvent(AuthStateEvent.CheckPreviousAuthEvent)
+    }
     private fun navMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

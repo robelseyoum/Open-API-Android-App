@@ -14,7 +14,7 @@ interface AccountPropertiesDao {
     fun insertAndReplace(accountProperties: AccountProperties): Long
 
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE) //id data is already exist ignore it
     fun insertOnIgnore(accountProperties: AccountProperties): Long
 
     @Query("SELECT * FROM account_properties WhERE pk = :pk")

@@ -85,4 +85,21 @@ class AuthViewModel @Inject constructor(
         super.onCleared()
         cancelActiveJobs()
     }
+
+
+    fun testLogin(): LiveData<GenericApiResponse<LoginResponse>>{
+        return authRepository.testingLoginRequest(
+            "addisbaba@email.com",
+            "addisababa"
+        )
+    }
+    fun testRegistration(): LiveData<GenericApiResponse<RegistrationResponse>>{
+        return authRepository.testRegistrationRequest(
+            "addisbaba@email.com",
+            "shegeraddis",
+            "addisbaba",
+            "addisbaba"
+        )
+    }
 }
+

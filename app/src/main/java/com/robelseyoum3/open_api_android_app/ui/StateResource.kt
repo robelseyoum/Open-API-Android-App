@@ -2,9 +2,9 @@ package com.robelseyoum3.open_api_android_app.ui
 
 
 
-data class Loading(val isLoading: Boolean)
-data class Data<T>(val data: Event<T>?, val response: Event<Response>?)
-data class StateError(val response: Response)
+data class Loading(val isLoading: Boolean) //used to show/hide progressbar
+data class Data<T>(val data: Event<T>?, val response: Event<Response>?) //
+data class StateError(val response: Response) //
 
 data class Response(val message: String?, val responseType: ResponseType)
 

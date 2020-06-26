@@ -9,7 +9,7 @@ import com.robelseyoum3.open_api_android_app.model.AuthToken
 @Dao
 interface AuthTokenDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) //if data already exist it will replace it
     suspend fun insert(authToken: AuthToken): Long
 
     @Query("UPDATE auth_token SET token = null WHERE account_pk = :pk")

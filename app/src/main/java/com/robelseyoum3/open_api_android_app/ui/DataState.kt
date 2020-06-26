@@ -7,9 +7,7 @@ data class DataState <T>(
 ) {
     companion object {
 
-        fun <T> error (
-            response: Response
-        ): DataState<T> {
+        fun <T> error ( response: Response): DataState<T> {
             return DataState(
                 error = Event(
                     StateError(response)
@@ -18,10 +16,7 @@ data class DataState <T>(
         }
 
 
-        fun <T> loading(
-            isLoading: Boolean,
-            cachedData: T? = null
-        ): DataState<T> {
+        fun <T> loading( isLoading: Boolean, cachedData: T? = null): DataState<T> {
             return DataState (
                 loading = Loading(isLoading),
                 data = Data (
@@ -32,10 +27,7 @@ data class DataState <T>(
         }
 
 
-        fun <T> data(
-            data: T? = null,
-            response: Response? = null
-        ): DataState<T> {
+        fun <T> data(data: T? = null, response: Response? = null): DataState<T> {
             return DataState(
                 data = Data(
                     Event.dataEvent(data),

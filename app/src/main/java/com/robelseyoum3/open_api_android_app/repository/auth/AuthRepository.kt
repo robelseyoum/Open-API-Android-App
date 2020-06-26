@@ -300,6 +300,19 @@ class AuthRepository constructor(
         Log.d(TAG, "AuthRepository: Cancelling on-going jobs..")
         repositoryJob?.cancel()
     }
+
+    fun testingLoginRequest(email: String, password: String): LiveData<GenericApiResponse<LoginResponse>> {
+        return openApiAuthService.login(email, password)
+    }
+
+    fun testRegistrationRequest(
+        email: String,
+        username: String,
+        password: String,
+        confirmPassword: String
+    ): LiveData<GenericApiResponse<RegistrationResponse>> {
+        return openApiAuthService.register(email, username, password, confirmPassword)
+    }
 }
 
 

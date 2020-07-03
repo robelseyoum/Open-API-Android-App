@@ -4,6 +4,10 @@ import com.robelseyoum3.open_api_android_app.di.auth.AuthFragmentBuildersModule
 import com.robelseyoum3.open_api_android_app.di.auth.AuthModule
 import com.robelseyoum3.open_api_android_app.di.auth.AuthScope
 import com.robelseyoum3.open_api_android_app.di.auth.AuthViewModelModule
+import com.robelseyoum3.open_api_android_app.di.main.MainFragmentBuildersModule
+import com.robelseyoum3.open_api_android_app.di.main.MainModule
+import com.robelseyoum3.open_api_android_app.di.main.MainScope
+import com.robelseyoum3.open_api_android_app.di.main.MainViewModelModule
 import com.robelseyoum3.open_api_android_app.ui.auth.AuthActivity
 import com.robelseyoum3.open_api_android_app.ui.main.MainActivity
 import dagger.Module
@@ -18,7 +22,11 @@ abstract class ActivityBuildersModule {
     )
     abstract fun contributeAuthActivity(): AuthActivity
 
-    @ContributesAndroidInjector
+
+    @MainScope
+    @ContributesAndroidInjector(
+        modules = [MainModule::class, MainFragmentBuildersModule::class, MainViewModelModule::class]
+    )
     abstract fun contributeMainActivity(): MainActivity
 
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
+import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent.*
 import com.robelseyoum3.open_api_android_app.ui.auth.state.RegistrationFields
 import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
 import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
@@ -53,7 +54,7 @@ class RegisterFragment : BaseAuthFragment() {
 
     fun register(){
         viewModel.setStateEvent(
-            AuthStateEvent.RegisterAttemptEvent(
+            RegisterAttemptEvent(
                 input_email.text.toString(),
                 input_username.text.toString(),
                 input_password.text.toString(),

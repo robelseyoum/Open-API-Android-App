@@ -85,14 +85,10 @@ class AuthRepository constructor(
                     )
                 }
 
-                saveAuthenticatedUserToPrefs(email)
+                saveAuthenticatedUserToPrefs(email) //here we pass email to store it into sharedpreference
 
                 onCompleteJob(
-                    DataState.data(
-                        data = AuthViewState(
-                            authToken = AuthToken(response.body.pk, response.body.token)
-                        )
-                    )
+                    DataState.data(data = AuthViewState(authToken = AuthToken(response.body.pk, response.body.token)))
                 )
 
             }
@@ -161,6 +157,7 @@ class AuthRepository constructor(
                         response.body.token
                     )
                 )
+
                 if(result2 < 0){
                     onCompleteJob(DataState.error(
                         Response(ERROR_SAVE_AUTH_TOKEN, ResponseType.Dialog)
@@ -168,7 +165,7 @@ class AuthRepository constructor(
                     return
                 }
 
-                saveAuthenticatedUserToPrefs(email)
+                saveAuthenticatedUserToPrefs(email) //this will share email to sharedpreference
 
                 onCompleteJob(
                     DataState.data(
@@ -220,7 +217,7 @@ class AuthRepository constructor(
                 }
 
                 override suspend fun createCacheRequestAndReturn() {
-                    accountPropertiesDao.searchByEmail(previousAuthUserEmail).let {accountProperties ->
+                    accountPropertiesDao.searchByEmail(previousAuthUserEmail).let { accountProperties ->
                         Log.d(TAG, "createCacheRequestAndReturn: searching for token: $accountProperties")
 
                         accountProperties?.let {
@@ -273,13 +270,15 @@ class AuthRepository constructor(
             }
         }
     }
-
+    //store the email into shared preference for pre authentication
     private fun saveAuthenticatedUserToPrefs(email: String) {
         sharedPrefsEditor.putString(PreferenceKeys.PREVIOUS_AUTH_USER, email)
         sharedPrefsEditor.apply()
     }
 
-    private fun returnErrorResponse(fieldsError: String, responseType: ResponseType.Dialog): LiveData<DataState<AuthViewState>> {
+    private fun returnErrorResponse(fieldsError: String, responseType: ResponseType.Dialog):
+            LiveData<DataState<AuthViewState>> {
+
         Log.d(TAG, "returnErrorResponse: $fieldsError")
 
         return object : LiveData<DataState<AuthViewState>>(){

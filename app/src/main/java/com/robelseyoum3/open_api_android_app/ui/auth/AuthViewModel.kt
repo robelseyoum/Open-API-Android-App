@@ -49,7 +49,7 @@ class AuthViewModel @Inject constructor(
     override fun initNewViewState(): AuthViewState {
         return AuthViewState()
     }
-
+    //here set the datastate for registration of AuthViewState
     fun setRegistrationFields(registrationFields: RegistrationFields){
         val update = getCurrentViewStateOrNew()
         if(update.registrationFields == registrationFields){
@@ -59,6 +59,7 @@ class AuthViewModel @Inject constructor(
         _viewState.value = update
     }
 
+    //here set the data state for login of AuthViewState
     fun setLoginField(loginFields: LoginFields){
         val update = getCurrentViewStateOrNew()
         if(update.loginField == loginFields){
@@ -68,6 +69,7 @@ class AuthViewModel @Inject constructor(
         _viewState.value = update
     }
 
+    //here set the data state for authtoken of AuthViewState
     fun setAuthToken(authToken: AuthToken){
         val update = getCurrentViewStateOrNew()
         if(update.authToken == authToken){

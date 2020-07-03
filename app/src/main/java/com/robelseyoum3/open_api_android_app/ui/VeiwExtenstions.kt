@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 import com.robelseyoum3.open_api_android_app.R
 
+//for string resource xml file @StringRes
 fun Context.displayToast(@StringRes message: Int){
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

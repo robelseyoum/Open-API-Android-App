@@ -60,7 +60,7 @@ class ForgotPasswordFragment : BaseAuthFragment() {
     @SuppressLint("SetJavaScriptEnabled")
     fun loadPasswordWebView(){
 
-        stateChangeListener.onDataStateChange(DataState.loading(isLoading = true, cachedData = null))
+        stateChangeListener.onDataStateChange(DataState.loading(isLoading = true, cachedData = null)) //show progressbar
 
         webView.webViewClient = object : WebViewClient() {
 

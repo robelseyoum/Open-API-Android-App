@@ -35,7 +35,8 @@ class SessionManager @Inject constructor(
         setValue(newValue)
     }
 
-    private fun setValue(newValue: AuthToken?) {
+    //set the value on main thread
+    fun setValue(newValue: AuthToken?) {
         GlobalScope.launch(Main){
             if(_cachedToken.value != newValue){
                 _cachedToken.value = newValue
@@ -45,14 +46,15 @@ class SessionManager @Inject constructor(
 
     fun logout() {
         Log.d(TAG, "logout: ")
-
+        //on back ground thread
         CoroutineScope(IO).launch {
             var errorMessage: String? = null
 
             try {
-                _cachedToken.value!!.account_pk?.let {
-                    authTokenDao.nullifyToken(it)
+                _cachedToken.value!!.account_pk?.let { pk ->
+                    authTokenDao.nullifyToken(pk)
                 } ?: throw CancellationException("Token Error, Logging out user.")
+
             } catch (e: CancellationException) {
                 Log.e(TAG, "logout: ${e.message}")
                 errorMessage = e.message

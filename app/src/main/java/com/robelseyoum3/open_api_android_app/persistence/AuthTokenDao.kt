@@ -12,6 +12,7 @@ interface AuthTokenDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE) //if data already exist it will replace it
     suspend fun insert(authToken: AuthToken): Long
 
+    //for similar pk it will make it the token null
     @Query("UPDATE auth_token SET token = null WHERE account_pk = :pk")
     fun nullifyToken(pk: Int): Int
 

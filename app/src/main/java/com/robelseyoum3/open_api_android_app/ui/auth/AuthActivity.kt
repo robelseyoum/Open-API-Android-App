@@ -43,6 +43,7 @@ class AuthActivity : BaseActivity(),
 
         viewModel.dataState.observe(this, Observer { dataState ->
 
+            onDataStateChange(dataState) //for showing dialogbox for error and success
 
             dataState.data?.let { data ->
 
@@ -56,7 +57,6 @@ class AuthActivity : BaseActivity(),
                 }
             }
 
-            onDataStateChange(dataState)
         })
 
         viewModel.viewState.observe(this, Observer { it ->
@@ -77,6 +77,7 @@ class AuthActivity : BaseActivity(),
     private fun checkPreviousAuthUser(){
         viewModel.setStateEvent(AuthStateEvent.CheckPreviousAuthEvent)
     }
+
     private fun navMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

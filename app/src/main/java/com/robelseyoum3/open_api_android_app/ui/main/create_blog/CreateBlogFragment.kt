@@ -1,29 +1,23 @@
-package com.robelseyoum3.open_api_android_app.ui.main.blog
+package com.robelseyoum3.open_api_android_app.ui.main.create_blog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.robelseyoum3.open_api_android_app.R
-import kotlinx.android.synthetic.main.fragment_blog.*
 
-class BlogFragment : BaseBlogFragment(){
 
+class CreateBlogFragment : BaseCreateBlogFragment(){
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blog, container, false)
+        return inflater.inflate(R.layout.fragment_create_blog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        goViewBlogFragment.setOnClickListener {
-            findNavController().navigate(R.id.action_blogFragment_to_viewBlogFragment)
-        }
     }
 }

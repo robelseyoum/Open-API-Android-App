@@ -43,6 +43,7 @@ class MainActivity : BaseActivity(),
         setupActionBar()
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.setUpNavigation(bottomNavController, this)
+
         if(savedInstanceState == null){
             bottomNavController.onNavigationItemSelected()
         }

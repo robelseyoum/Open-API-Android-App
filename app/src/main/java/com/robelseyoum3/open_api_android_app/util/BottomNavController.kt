@@ -156,9 +156,10 @@ fun BottomNavigationView.setUpNavigation(
     bottomNavController: BottomNavController,
     onReselectListener: BottomNavController.OnNavigationReselectedListener
 ){
-    setOnNavigationItemReselectedListener {
+    setOnNavigationItemSelectedListener {
         bottomNavController.onNavigationItemSelected(it.itemId)
     }
+
 
     setOnNavigationItemReselectedListener {
         bottomNavController

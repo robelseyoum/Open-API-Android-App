@@ -26,6 +26,10 @@ class AccountFragment : BaseAccountFragment(){
         setHasOptionsMenu(true)
 
         change_password.setOnClickListener {
+            findNavController().navigate(R.id.action_accountFragment_to_changePasswordFragment)
+        }
+
+        logout_button.setOnClickListener {
             sessionManager.logout()
         }
     }

@@ -1,7 +1,14 @@
 package com.robelseyoum3.open_api_android_app.ui.main.create_blog
 
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.DataStateChangeListener
 import dagger.android.support.DaggerFragment
 
@@ -18,5 +25,19 @@ abstract class BaseCreateBlogFragment : DaggerFragment(){
         }catch(e: ClassCastException){
             Log.e(TAG, "$context must implement DataStateChangeListener" )
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupActionBarWithNavController(R.id.createBlogFragment, activity as AppCompatActivity)
+    }
+
+    private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+        val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
+        NavigationUI.setupActionBarWithNavController(
+            activity,
+            findNavController(),
+            appBarConfiguration
+        )
     }
 }

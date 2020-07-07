@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
+import com.google.android.material.appbar.AppBarLayout
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
 import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
@@ -98,6 +99,10 @@ class AuthActivity : BaseActivity(),
         } else {
             progress_bar.visibility = View.GONE
         }
+    }
+
+    override fun expandAppbar(){
+        //ignore
     }
 
 }

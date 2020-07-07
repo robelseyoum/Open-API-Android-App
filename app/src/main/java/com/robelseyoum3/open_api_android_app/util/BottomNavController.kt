@@ -26,11 +26,6 @@ class BottomNavController(
     lateinit var navItemChangeListener: OnNavigationItemChanged
     private val navigationBackStack = BackStack.of(appStartDestinationId)
 
-    //For setting the checked icon in the bottom nav
-    interface  OnNavigationItemChanged{
-        fun onItemChanged(itemId: Int)
-    }
-
     init {
         if(context is Activity)
         {
@@ -63,6 +58,7 @@ class BottomNavController(
 
 
         //communicate with Activity
+        // this used to let notify the activity that the task is cancelled or as if pressed back button
         graphChangeListener?.onGraphChange()
 
         return true
@@ -103,14 +99,17 @@ class BottomNavController(
 
         }
     }
-
+    //creating custom arraylist for backstack
     private class BackStack: ArrayList<Int>(){
+
         companion object {
+
             fun of(vararg  elements: Int): BackStack {
                 val b = BackStack()
                 b.addAll(elements.toTypedArray())
                 return b
             }
+
         }
 
         fun removeLast() = removeAt(size - 1)
@@ -120,6 +119,12 @@ class BottomNavController(
             add(item)
         }
     }
+
+    //For setting the checked icon in the bottom nav
+    interface  OnNavigationItemChanged{
+        fun onItemChanged(itemId: Int)
+    }
+
 
     fun setOnItemNavigationChanged(listener: (itemId: Int) -> Unit){
         navItemChangeListener = object: OnNavigationItemChanged {
@@ -156,6 +161,10 @@ fun BottomNavigationView.setUpNavigation(
     bottomNavController: BottomNavController,
     onReselectListener: BottomNavController.OnNavigationReselectedListener
 ){
+
+    /**
+     * this will call this method "fun onNavigationItemSelected(itemId: Int = navigationBackStack.last()): Boolean"
+     */
     setOnNavigationItemSelectedListener {
         bottomNavController.onNavigationItemSelected(it.itemId)
     }

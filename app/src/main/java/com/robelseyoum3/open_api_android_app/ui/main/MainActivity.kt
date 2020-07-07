@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
@@ -17,21 +18,22 @@ import com.robelseyoum3.open_api_android_app.ui.main.account.UpdateAccountFragme
 import com.robelseyoum3.open_api_android_app.ui.main.blog.UpdateBlogFragment
 import com.robelseyoum3.open_api_android_app.ui.main.blog.ViewBlogFragment
 import com.robelseyoum3.open_api_android_app.util.BottomNavController
+import com.robelseyoum3.open_api_android_app.util.BottomNavController.*
 import com.robelseyoum3.open_api_android_app.util.setUpNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(),
-        BottomNavController.NavGraphProvider,
-        BottomNavController.OnNavigationGraphChanged,
-        BottomNavController.OnNavigationReselectedListener
+        NavGraphProvider,
+        OnNavigationGraphChanged,
+        OnNavigationReselectedListener
 {
     private  lateinit var bottomNavigationView: BottomNavigationView
 
     private  val bottomNavController by lazy(LazyThreadSafetyMode.NONE) {
         BottomNavController(
             this,
-            R.id.main_nav_host_fragment,
-            R.id.nav_blog,
+            R.id.main_nav_host_fragment, //nav host container
+            R.id.nav_blog, //start destination
             this,
             this
         )
@@ -105,7 +107,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onGraphChange() {
-//        TODO("what needs to happen when the graph changes?")
+        expandAppbar()
     }
 
     override fun onReselectNavItem(navController: NavController, fragment: Fragment) = when(fragment) {
@@ -131,5 +133,9 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onBackPressed() = bottomNavController.onBackPressed()
+
+    override fun expandAppbar(){
+        findViewById<AppBarLayout>(R.id.app_bar).setExpanded(true)
+    }
 
 }

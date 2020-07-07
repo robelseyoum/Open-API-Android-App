@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.robelseyoum3.open_api_android_app.ui.auth.ForgotPasswordFragment"
-        android:label="fragment_forgot_password"
+        android:label="@string/fragment_change_password"
         tools:layout="@layout/fragment_forgot_password" />
 
     <fragment

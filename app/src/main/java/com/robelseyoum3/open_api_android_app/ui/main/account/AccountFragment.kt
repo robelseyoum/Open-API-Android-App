@@ -1,17 +1,18 @@
 package com.robelseyoum3.open_api_android_app.ui.main.account
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.robelseyoum3.open_api_android_app.R
+import com.robelseyoum3.open_api_android_app.model.AccountProperties
 import com.robelseyoum3.open_api_android_app.session.SessionManager
+import com.robelseyoum3.open_api_android_app.ui.main.account.state.AccountStateEvent
 import kotlinx.android.synthetic.main.fragment_account.*
 import javax.inject.Inject
 
 class AccountFragment : BaseAccountFragment(){
-
-    @Inject
-    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +31,51 @@ class AccountFragment : BaseAccountFragment(){
         }
 
         logout_button.setOnClickListener {
-            sessionManager.logout()
+            viewModel.logOut()
         }
+
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers(){
+        //here we observe the data state
+        viewModel.dataState.observe(viewLifecycleOwner, Observer {dataState ->
+            stateChangeListener.onDataStateChange(dataState)
+            dataState?.let {
+                it.data?.let { data ->
+                    data.data?.let { event ->
+                        event.getContentIfNotHandled()?.let { accountViewState ->
+                            accountViewState.accountProperties?.let {accountProperties ->
+                                Log.d(TAG, "AccountFragment, DataState: $accountProperties")
+                                viewModel.setAccountPropertiesData(accountProperties) //this will be used to view get observed
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        //once the data state is observed it will assign the value to view state and  here we observe the view state
+        viewModel.viewState.observe(viewLifecycleOwner, Observer { viewState ->
+            viewState?.let { accountViewState ->
+                accountViewState.accountProperties?.let { accountProperties ->
+                    Log.d(TAG, "AccountFragment, ViewState: $accountProperties")
+                    setAccountDataFields(accountProperties)
+                }
+            }
+        })
+    }
+
+    private fun setAccountDataFields(accountProperties: AccountProperties){
+        email?.text = accountProperties.email
+        username?.text = accountProperties.username
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setStateEvent(
+            AccountStateEvent.GetAccountPropertiesEvent
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

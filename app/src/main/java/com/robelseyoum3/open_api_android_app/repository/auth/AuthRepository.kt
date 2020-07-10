@@ -29,8 +29,9 @@ import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.GENER
 import com.robelseyoum3.open_api_android_app.util.PreferenceKeys
 import com.robelseyoum3.open_api_android_app.util.SuccessHandling.Companion.RESPONSE_CHECK_PREVIOUS_AUTH_USER_DONE
 import kotlinx.coroutines.Job
+import javax.inject.Inject
 
-class AuthRepository constructor(
+class AuthRepository @Inject constructor(
     val authTokenDao: AuthTokenDao,
     val accountPropertiesDao: AccountPropertiesDao,
     val openApiAuthService: OpenApiAuthService,
@@ -48,9 +49,11 @@ class AuthRepository constructor(
             return returnErrorResponse(loginFieldError, ResponseType.Dialog)
         }
 
-        return object : NetworkBoundResource<LoginResponse, AuthViewState>(
+        return object : NetworkBoundResource<LoginResponse, Any, AuthViewState>(
             sessionManager.isConnectedToTheInternet(),
-            true
+            true,
+            true,
+        false
         ){
             override suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<LoginResponse>) {
                 Log.d(TAG, "handleApiSuccessResponse: $response")
@@ -105,6 +108,15 @@ class AuthRepository constructor(
             override suspend fun createCacheRequestAndReturn() {
             }
 
+            //not used in this case
+            override fun loadFromCache(): LiveData<AuthViewState> {
+                return AbsentLiveData.create()
+            }
+
+            //not used in this case
+            override suspend fun updateLocalDb(cacheObject: Any?) {
+            }
+
         }.asLiveData()
 
     }
@@ -122,9 +134,11 @@ class AuthRepository constructor(
             return returnErrorResponse(registrationFieldErrors, ResponseType.Dialog)
         }
 
-        return object : NetworkBoundResource<RegistrationResponse, AuthViewState>(
+        return object : NetworkBoundResource<RegistrationResponse, Any, AuthViewState>(
             sessionManager.isConnectedToTheInternet(),
-            true
+            true,
+            true,
+        false
         ){
             override suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<RegistrationResponse>) {
 
@@ -189,6 +203,15 @@ class AuthRepository constructor(
             override suspend fun createCacheRequestAndReturn() {
             }
 
+            //not used in this case
+            override fun loadFromCache(): LiveData<AuthViewState> {
+                return AbsentLiveData.create()
+            }
+
+            //not used in this case
+            override suspend fun updateLocalDb(cacheObject: Any?) {
+            }
+
         }.asLiveData()
     }
 
@@ -199,10 +222,21 @@ class AuthRepository constructor(
             Log.d(TAG, "checkPreviousAuthUser: No previously authenticated user found..")
             return returnNoTokenFound()
         } else {
-            return object: NetworkBoundResource<Void, AuthViewState>(
+            return object: NetworkBoundResource<Void, Any, AuthViewState>(
                 sessionManager.isConnectedToTheInternet(),
+                false,
+                false,
                 false
             ){
+                //not used in this case
+                override fun loadFromCache(): LiveData<AuthViewState> {
+                    return AbsentLiveData.create()
+                }
+
+                //not used in this case
+                override suspend fun updateLocalDb(cacheObject: Any?) {
+                }
+
                 //not used in this case
                 override suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<Void>) {
                 }

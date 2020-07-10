@@ -27,13 +27,14 @@
             android:layout_marginTop="50dp"
             app:layout_constraintVertical_chainStyle="packed"
             >
+<!-- not consuming the entire screen : android:imeOptions="flagNoExtractUi" -->
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:inputType="textEmailAddress"
                 android:id="@+id/input_email"
-
+                android:imeOptions="flagNoExtractUi"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +59,7 @@
                 android:textColor="#000"
                 android:inputType="text"
                 android:layout_marginTop="30dp"
-
+                android:imeOptions="flagNoExtractUi"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

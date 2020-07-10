@@ -1,6 +1,10 @@
 package com.robelseyoum3.open_api_android_app.ui
 
+import android.content.Context
+import android.hardware.input.InputManager
 import android.util.Log
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import com.robelseyoum3.open_api_android_app.session.SessionManager
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.coroutines.Dispatchers.Main
@@ -81,6 +85,15 @@ abstract class BaseActivity : DaggerAppCompatActivity(), DataStateChangeListener
                     Log.e(TAG, "handleStateError: ${it.response.message}")
                 }
             }
+        }
+    }
+    //used to hide the keyboard
+    override fun hideSoftKeyboard() {
+        if(currentFocus != null){
+            val inputMethodManager = getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            //here we tell to hide for any keyboard pop up
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
     }
 

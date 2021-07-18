@@ -39,7 +39,7 @@ class LauncherFragment : BaseAuthFragment() {
             navForgotPassword()
         }
 
-        focusable_view.requestFocus()
+        focusable_view.requestFocus()  //help to control the focus
 
         Log.d(TAG, "LauncherFragment: ${viewModel.hashCode()}")
 

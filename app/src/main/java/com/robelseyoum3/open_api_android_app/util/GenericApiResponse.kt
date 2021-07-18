@@ -10,6 +10,15 @@ import retrofit2.Response
 @Suppress("unused") // T is used in extending classes
 sealed class GenericApiResponse<T> {
 
+    /**
+     * separate class for HTTP 204 responses so that we can make ApiSuccessResponse's body non-null.
+     */
+    class ApiEmptyResponse<T> : GenericApiResponse<T>()
+
+    data class ApiSuccessResponse<T>(val body: T) : GenericApiResponse<T>() {}
+
+    data class ApiErrorResponse<T>(val errorMessage: String) : GenericApiResponse<T>()
+
     companion object {
         private val TAG: String = "AppDebug"
 
@@ -27,17 +36,16 @@ sealed class GenericApiResponse<T> {
             Log.d(TAG, "GenericApiResponse: headers: ${response.headers()}")
             Log.d(TAG, "GenericApiResponse: message: ${response.message()}")
 
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 val body = response.body()
                 return if (body == null || response.code() == 204) {
                     ApiEmptyResponse()
-                } else if(response.code() == 401){
+                } else if (response.code() == 401) {
                     ApiErrorResponse("401 Unauthorized. Token may be invalid.")
                 } else {
                     ApiSuccessResponse(body = body)
                 }
-            }
-            else{
+            } else {
                 val msg = response.errorBody()?.string()
                 val errorMsg = if (msg.isNullOrEmpty()) {
                     response.message()
@@ -52,11 +60,3 @@ sealed class GenericApiResponse<T> {
     }
 }
 
-/**
- * separate class for HTTP 204 responses so that we can make ApiSuccessResponse's body non-null.
- */
-class ApiEmptyResponse<T> : GenericApiResponse<T>()
-
-data class ApiSuccessResponse<T>(val body: T) : GenericApiResponse<T>() {}
-
-data class ApiErrorResponse<T>(val errorMessage: String) : GenericApiResponse<T>()

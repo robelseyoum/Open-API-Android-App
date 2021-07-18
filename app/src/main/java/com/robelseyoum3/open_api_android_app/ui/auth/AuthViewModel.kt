@@ -1,7 +1,6 @@
 package com.robelseyoum3.open_api_android_app.ui.auth
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import com.robelseyoum3.open_api_android_app.api.auth.network_responses.LoginResponse
 import com.robelseyoum3.open_api_android_app.api.auth.network_responses.RegistrationResponse
 import com.robelseyoum3.open_api_android_app.model.AuthToken
@@ -49,6 +48,7 @@ class AuthViewModel @Inject constructor(
     override fun initNewViewState(): AuthViewState {
         return AuthViewState()
     }
+    
     //here set the datastate for registration of AuthViewState
     fun setRegistrationFields(registrationFields: RegistrationFields){
         val update = getCurrentViewStateOrNew()
@@ -91,16 +91,16 @@ class AuthViewModel @Inject constructor(
 
     fun testLogin(): LiveData<GenericApiResponse<LoginResponse>>{
         return authRepository.testingLoginRequest(
-            "addisbaba@email.com",
-            "addisababa"
+            "",
+            ""
         )
     }
     fun testRegistration(): LiveData<GenericApiResponse<RegistrationResponse>>{
         return authRepository.testRegistrationRequest(
-            "addisbaba@email.com",
-            "shegeraddis",
-            "addisbaba",
-            "addisbaba"
+            "",
+            "",
+            "",
+            ""
         )
     }
 }

@@ -14,9 +14,6 @@ import com.robelseyoum3.open_api_android_app.model.AuthToken
 import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
 import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent.*
 import com.robelseyoum3.open_api_android_app.ui.auth.state.LoginFields
-import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
-import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
-import com.robelseyoum3.open_api_android_app.util.ApiSuccessResponse
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseAuthFragment() {

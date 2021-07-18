@@ -20,8 +20,8 @@ import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthViewState
 import com.robelseyoum3.open_api_android_app.ui.auth.state.LoginFields
 import com.robelseyoum3.open_api_android_app.ui.auth.state.RegistrationFields
 import com.robelseyoum3.open_api_android_app.util.AbsentLiveData
-import com.robelseyoum3.open_api_android_app.util.ApiSuccessResponse
 import com.robelseyoum3.open_api_android_app.util.GenericApiResponse
+import com.robelseyoum3.open_api_android_app.util.GenericApiResponse.*
 import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.ERROR_SAVE_ACCOUNT_PROPERTIES
 import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.ERROR_SAVE_AUTH_TOKEN
 import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.ERROR_UNKNOWN

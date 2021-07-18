@@ -12,9 +12,6 @@ import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
 import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent.*
 import com.robelseyoum3.open_api_android_app.ui.auth.state.RegistrationFields
-import com.robelseyoum3.open_api_android_app.util.ApiEmptyResponse
-import com.robelseyoum3.open_api_android_app.util.ApiErrorResponse
-import com.robelseyoum3.open_api_android_app.util.ApiSuccessResponse
 import kotlinx.android.synthetic.main.fragment_register.*
 
 

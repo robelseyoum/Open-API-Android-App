@@ -10,6 +10,7 @@ import com.robelseyoum3.open_api_android_app.ui.ResponseType
 import com.robelseyoum3.open_api_android_app.util.*
 import com.robelseyoum3.open_api_android_app.util.Constants.Companion.NETWORK_TIMEOUT
 import com.robelseyoum3.open_api_android_app.util.Constants.Companion.TESTING_NETWORK_DELAY
+import com.robelseyoum3.open_api_android_app.util.GenericApiResponse.*
 import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.ERROR_CHECK_NETWORK_CONNECTION
 import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.ERROR_UNKNOWN
 import com.robelseyoum3.open_api_android_app.util.HandlingErrors.Companion.UNABLE_TODO_OPERATION_WO_INTERNET

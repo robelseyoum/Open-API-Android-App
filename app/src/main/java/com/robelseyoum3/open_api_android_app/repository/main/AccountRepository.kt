@@ -15,8 +15,8 @@ import com.robelseyoum3.open_api_android_app.ui.Response
 import com.robelseyoum3.open_api_android_app.ui.ResponseType
 import com.robelseyoum3.open_api_android_app.ui.main.account.state.AccountViewState
 import com.robelseyoum3.open_api_android_app.util.AbsentLiveData
-import com.robelseyoum3.open_api_android_app.util.ApiSuccessResponse
 import com.robelseyoum3.open_api_android_app.util.GenericApiResponse
+import com.robelseyoum3.open_api_android_app.util.GenericApiResponse.*
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext

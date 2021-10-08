@@ -13,7 +13,6 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.navigation.fragment.findNavController
-
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.DataState
 import com.robelseyoum3.open_api_android_app.ui.DataStateChangeListener
@@ -62,15 +61,14 @@ class ForgotPasswordFragment : BaseAuthFragment() {
 
         stateChangeListener.onDataStateChange(DataState.loading(isLoading = true, cachedData = null)) //show progressbar
 
-        webView.webViewClient = object : WebViewClient() {
+        webView.webViewClient = object : WebViewClient() { //detect certain state of the webview
 
-            override fun onPageFinished(view: WebView?, url: String?) {
+            override fun onPageFinished(view: WebView?, url: String?) { //when the webview comes on the view
                 super.onPageFinished(view, url)
 
                 stateChangeListener.onDataStateChange(
                     DataState.loading(isLoading = false, cachedData = null) //hide progressbar
                 )
-
             }
         }
 
@@ -106,7 +104,7 @@ class ForgotPasswordFragment : BaseAuthFragment() {
 
     private fun onPasswordResetLinkSent() {
         GlobalScope.launch(Main){
-            parent_view.removeView(webView)
+            parent_view.removeView(webView) //FrameLayout
             val animation = TranslateAnimation(
                 password_reset_done_container.width.toFloat(),
                 0f,

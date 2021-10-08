@@ -7,7 +7,6 @@ sealed class AuthStateEvent {
         val password: String
     ): AuthStateEvent()
 
-
     data class RegisterAttemptEvent(
         val email: String,
         val username: String,

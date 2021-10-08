@@ -87,9 +87,10 @@ abstract class BaseActivity : DaggerAppCompatActivity(), DataStateChangeListener
             }
         }
     }
+
     //used to hide the keyboard
     override fun hideSoftKeyboard() {
-        if(currentFocus != null){
+        if(currentFocus != null) {
             val inputMethodManager = getSystemService(
                 Context.INPUT_METHOD_SERVICE) as InputMethodManager
             //here we tell to hide for any keyboard pop up

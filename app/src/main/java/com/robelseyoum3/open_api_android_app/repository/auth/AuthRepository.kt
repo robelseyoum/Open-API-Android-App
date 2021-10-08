@@ -36,8 +36,8 @@ class AuthRepository @Inject constructor(
     val accountPropertiesDao: AccountPropertiesDao,
     val openApiAuthService: OpenApiAuthService,
     val sessionManager: SessionManager,
-    val sharedPreferences: SharedPreferences,
-    val sharedPrefsEditor: SharedPreferences.Editor
+    val sharedPreferences: SharedPreferences, // this to read from the sharedpreference
+    val sharedPrefsEditor: SharedPreferences.Editor // this is to write into shared preference
 ) {
 
     private val TAG: String = "AppDebug"
@@ -114,8 +114,7 @@ class AuthRepository @Inject constructor(
             }
 
             //not used in this case
-            override suspend fun updateLocalDb(cacheObject: Any?) {
-            }
+            override suspend fun updateLocalDb(cacheObject: Any?) {}
 
         }.asLiveData()
 
@@ -200,8 +199,7 @@ class AuthRepository @Inject constructor(
             }
 
             //not used in this case
-            override suspend fun createCacheRequestAndReturn() {
-            }
+            override suspend fun createCacheRequestAndReturn() {}
 
             //not used in this case
             override fun loadFromCache(): LiveData<AuthViewState> {
@@ -255,7 +253,7 @@ class AuthRepository @Inject constructor(
                         Log.d(TAG, "createCacheRequestAndReturn: searching for token: $accountProperties")
 
                         accountProperties?.let {
-                            if(accountProperties.pk > -1)
+                            if(accountProperties.pk > -1) //primary key value started from zero(0)
                             {
                                 authTokenDao.searchByPk(accountProperties.pk).let { authToken ->
 
@@ -304,13 +302,14 @@ class AuthRepository @Inject constructor(
             }
         }
     }
+
     //store the email into shared preference for pre authentication
     private fun saveAuthenticatedUserToPrefs(email: String) {
         sharedPrefsEditor.putString(PreferenceKeys.PREVIOUS_AUTH_USER, email)
         sharedPrefsEditor.apply()
     }
 
-    private fun returnErrorResponse(fieldsError: String, responseType: ResponseType.Dialog):
+    private fun returnErrorResponse(fieldsError: String, responseType: ResponseType):
             LiveData<DataState<AuthViewState>> {
 
         Log.d(TAG, "returnErrorResponse: $fieldsError")

@@ -52,7 +52,6 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
 
-
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.robelseyoum3.open_api_android_app.ui.auth.RegisterFragment"

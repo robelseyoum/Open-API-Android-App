@@ -57,5 +57,4 @@ class LauncherFragment : BaseAuthFragment() {
         findNavController().navigate(R.id.action_launcherFragment_to_forgotPasswordFragment)
     }
 
-
 }

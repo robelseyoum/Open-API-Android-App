@@ -8,6 +8,10 @@ import androidx.room.ForeignKey.CASCADE
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Because of the Foreignkeys relations, AuthToken can't create new raw unless we have pk from
+ * AccountProperties
+ */
 @Entity(
     tableName = "auth_token",
     foreignKeys = [

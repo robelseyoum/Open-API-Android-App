@@ -23,13 +23,12 @@ import com.robelseyoum3.open_api_android_app.util.setUpNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(),
-        NavGraphProvider,
-        OnNavigationGraphChanged,
-        OnNavigationReselectedListener
-{
-    private  lateinit var bottomNavigationView: BottomNavigationView
+    NavGraphProvider,
+    OnNavigationGraphChanged,
+    OnNavigationReselectedListener {
+    private lateinit var bottomNavigationView: BottomNavigationView
 
-    private  val bottomNavController by lazy(LazyThreadSafetyMode.NONE) {
+    private val bottomNavController by lazy(LazyThreadSafetyMode.NONE) {
         BottomNavController(
             this,
             R.id.main_nav_host_fragment, //nav host container
@@ -46,7 +45,7 @@ class MainActivity : BaseActivity(),
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.setUpNavigation(bottomNavController, this)
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             bottomNavController.onNavigationItemSelected()
         }
         subscribeObservers()
@@ -54,10 +53,9 @@ class MainActivity : BaseActivity(),
 
     private fun subscribeObservers() {
         sessionManager.cachedToken.observe(this, Observer { authToken ->
-            Log.d(TAG, "MainActivity, subscribeObservers: ViewState: $authToken")
+            Log.d(TAG, "MainActivity, subscribeObservers: AuthToken: $authToken")
 
-            if(authToken == null || authToken.account_pk == -1 || authToken.token == null)
-            {
+            if (authToken == null || authToken.account_pk == -1 || authToken.token == null) {
                 navAuthActivity()
             }
         })
@@ -70,14 +68,14 @@ class MainActivity : BaseActivity(),
     }
 
     override fun displayProgressBar(boolean: Boolean) {
-        if(boolean){
+        if (boolean) {
             progress_bar.visibility = View.VISIBLE
         } else {
             progress_bar.visibility = View.INVISIBLE
         }
     }
 
-    override fun getNavGraphId(itemId: Int) = when(itemId) {
+    override fun getNavGraphId(itemId: Int) = when (itemId) {
         R.id.nav_blog -> {
             R.navigation.nav_blog
         }
@@ -90,17 +88,17 @@ class MainActivity : BaseActivity(),
             R.navigation.nav_create_blog
         }
 
-        else  -> {
+        else -> {
             R.navigation.nav_blog
         }
     }
 
-    private fun setupActionBar(){
+    private fun setupActionBar() {
         setSupportActionBar(tool_bar)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
@@ -110,31 +108,32 @@ class MainActivity : BaseActivity(),
         expandAppbar()
     }
 
-    override fun onReselectNavItem(navController: NavController, fragment: Fragment) = when(fragment) {
-        is ViewBlogFragment -> {
-            navController.navigate(R.id.action_viewBlogFragment_to_blogFragment)
-        }
+    override fun onReselectNavItem(navController: NavController, fragment: Fragment) =
+        when (fragment) {
+            is ViewBlogFragment -> {
+                navController.navigate(R.id.action_viewBlogFragment_to_blogFragment)
+            }
 
-        is UpdateBlogFragment -> {
-            navController.navigate(R.id.action_updateBlogFragment_to_blogFragment)
-        }
+            is UpdateBlogFragment -> {
+                navController.navigate(R.id.action_updateBlogFragment_to_blogFragment)
+            }
 
-        is UpdateAccountFragment -> {
-            navController.navigate(R.id.action_updateAccountFragment_to_accountFragment)
-        }
+            is UpdateAccountFragment -> {
+                navController.navigate(R.id.action_updateAccountFragment_to_accountFragment)
+            }
 
-        is ChangePasswordFragment -> {
-            navController.navigate(R.id.action_changePasswordFragment_to_accountFragment)
-        }
+            is ChangePasswordFragment -> {
+                navController.navigate(R.id.action_changePasswordFragment_to_accountFragment)
+            }
 
-        else -> {
-            //do nothing
+            else -> {
+                //do nothing
+            }
         }
-    }
 
     override fun onBackPressed() = bottomNavController.onBackPressed()
 
-    override fun expandAppbar(){
+    override fun expandAppbar() {
         findViewById<AppBarLayout>(R.id.app_bar).setExpanded(true)
     }
 

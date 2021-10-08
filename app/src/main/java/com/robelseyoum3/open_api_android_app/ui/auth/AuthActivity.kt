@@ -42,24 +42,6 @@ class AuthActivity : BaseActivity(),
 
     private fun subscribeObservers() {
 
-        viewModel.dataState.observe(this, Observer { dataState ->
-
-            onDataStateChange(dataState) //for showing dialogbox for error and success
-
-            dataState.data?.let { data ->
-
-                data.data?.let { event ->
-                 event.getContentIfNotHandled()?.let {
-                     it.authToken?.let {
-                         Log.d(TAG, "AuthActivity, DataState: $it")
-                         viewModel.setAuthToken(it)
-                         }
-                    }
-                }
-            }
-
-        })
-
         viewModel.viewState.observe(this, Observer { it ->
             it.authToken?.let { authToken ->
                 sessionManager.login(authToken) }
@@ -67,11 +49,28 @@ class AuthActivity : BaseActivity(),
 
         sessionManager.cachedToken.observe(this, Observer { authToken ->
             Log.d(TAG, "AuthActivity, subscribeObservers: ViewState: $authToken")
-
             if(authToken != null && authToken.account_pk != -1 && authToken.token != null)
             {
                 navMainActivity()
             }
+        })
+
+        viewModel.dataState.observe(this, Observer { dataState ->
+
+            onDataStateChange(dataState) //for showing dialogbox for error and success
+
+            dataState.data?.let { data ->
+
+                data.data?.let { event ->
+                    event.getContentIfNotHandled()?.let {
+                        it.authToken?.let {
+                            Log.d(TAG, "AuthActivity, DataState: $it")
+                            viewModel.setAuthToken(it)
+                        }
+                    }
+                }
+            }
+
         })
     }
 

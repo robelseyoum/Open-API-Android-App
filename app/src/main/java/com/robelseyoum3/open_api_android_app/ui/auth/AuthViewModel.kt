@@ -21,8 +21,7 @@ class AuthViewModel @Inject constructor(
 ) : BaseViewModel<AuthStateEvent, AuthViewState>() {
 
     override fun handleStateEvent(stateEvent: AuthStateEvent): LiveData<DataState<AuthViewState>> {
-        return when(stateEvent){
-
+        when (stateEvent) {
             is LoginAttemptEvent -> {
                 return authRepository.attemptLogin(
                     stateEvent.email,
@@ -48,11 +47,11 @@ class AuthViewModel @Inject constructor(
     override fun initNewViewState(): AuthViewState {
         return AuthViewState()
     }
-    
+
     //here set the datastate for registration of AuthViewState
-    fun setRegistrationFields(registrationFields: RegistrationFields){
+    fun setRegistrationFields(registrationFields: RegistrationFields) {
         val update = getCurrentViewStateOrNew()
-        if(update.registrationFields == registrationFields){
+        if (update.registrationFields == registrationFields) {
             return
         }
         update.registrationFields = registrationFields
@@ -60,9 +59,9 @@ class AuthViewModel @Inject constructor(
     }
 
     //here set the data state for login of AuthViewState
-    fun setLoginField(loginFields: LoginFields){
+    fun setLoginField(loginFields: LoginFields) {
         val update = getCurrentViewStateOrNew()
-        if(update.loginField == loginFields){
+        if (update.loginField == loginFields) {
             return
         }
         update.loginField = loginFields
@@ -70,16 +69,16 @@ class AuthViewModel @Inject constructor(
     }
 
     //here set the data state for authtoken of AuthViewState
-    fun setAuthToken(authToken: AuthToken){
+    fun setAuthToken(authToken: AuthToken) {
         val update = getCurrentViewStateOrNew()
-        if(update.authToken == authToken){
+        if (update.authToken == authToken) {
             return
         }
         update.authToken = authToken
         _viewState.value = update
     }
 
-    fun cancelActiveJobs(){
+    fun cancelActiveJobs() {
         authRepository.cancelActiveJobs()
     }
 
@@ -89,13 +88,14 @@ class AuthViewModel @Inject constructor(
     }
 
 
-    fun testLogin(): LiveData<GenericApiResponse<LoginResponse>>{
+    fun testLogin(): LiveData<GenericApiResponse<LoginResponse>> {
         return authRepository.testingLoginRequest(
             "",
             ""
         )
     }
-    fun testRegistration(): LiveData<GenericApiResponse<RegistrationResponse>>{
+
+    fun testRegistration(): LiveData<GenericApiResponse<RegistrationResponse>> {
         return authRepository.testRegistrationRequest(
             "",
             "",

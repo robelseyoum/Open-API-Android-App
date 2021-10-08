@@ -34,11 +34,14 @@ class BottomNavController(
         }
     }
 
+    //This is executed when we tap on the bottom nav tab icon
+    //by default it will hold the last screen
     fun onNavigationItemSelected(itemId: Int = navigationBackStack.last()): Boolean {
 
         //Replace fragment representing a navigation item
         val fragment = fragmentManager.findFragmentByTag(itemId.toString())
             ?: NavHostFragment.create(navGraphProvider.getNavGraphId(itemId))
+
         fragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.fade_in,
@@ -54,6 +57,7 @@ class BottomNavController(
         navigationBackStack.moveLast(itemId)
 
         //update checked icon
+        //highlight the selected bottom nav icon!
         navItemChangeListener.onItemChanged(itemId)
 
 
@@ -63,7 +67,7 @@ class BottomNavController(
 
         return true
     }
-
+    //this is also used on main activity
     fun onBackPressed(){
         val childFragmentManager = fragmentManager.findFragmentById(containerId)!!
             .childFragmentManager
@@ -114,6 +118,12 @@ class BottomNavController(
 
         fun removeLast() = removeAt(size - 1)
 
+        /**
+         {1, 2, 3, 4}
+         moveLast(3) // this will remove 3 from above
+         add(3) // this will add 3 at the last
+         {1, 2, 4, 3}
+         */
         fun moveLast(item: Int){
             remove(item)
             add(item)
@@ -121,6 +131,7 @@ class BottomNavController(
     }
 
     //For setting the checked icon in the bottom nav
+    //this one is used in this class internally only!
     interface  OnNavigationItemChanged{
         fun onItemChanged(itemId: Int)
     }
@@ -145,11 +156,13 @@ class BottomNavController(
 
     //Execute when navigation graph changes
     //ex: Select a new item on the bottom nav
-    //ex: Home -> Account
+    //ex: Home -> Account or Create <-> Account
     interface OnNavigationGraphChanged {
         fun onGraphChange()
     }
 
+    //Home -> UpdateBlogIcon then reselect back Home-> this will be triggered
+    //This is implemented on the MainActivity and mainactivity will call the corresponding action
     interface OnNavigationReselectedListener  {
         fun onReselectNavItem(navController: NavController, fragment: Fragment)
     }
@@ -169,7 +182,7 @@ fun BottomNavigationView.setUpNavigation(
         bottomNavController.onNavigationItemSelected(it.itemId)
     }
 
-
+    //This looks for the fragments on each selected bottom nav
     setOnNavigationItemReselectedListener {
         bottomNavController
             .fragmentManager

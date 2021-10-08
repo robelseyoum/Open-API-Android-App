@@ -23,9 +23,18 @@ import com.robelseyoum3.open_api_android_app.util.setUpNavigation
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(),
+    //Get id of each graph
+    //ex: R.navigation.nav_blog
+    //ex: R.navigation.nav_create_blog
     NavGraphProvider,
+    //Execute when navigation graph changes
+    //ex: Select a new item on the bottom nav
+    //ex: Home -> Account or Create <-> Account
     OnNavigationGraphChanged,
-    OnNavigationReselectedListener {
+    //Home -> UpdateBlogIcon then reselect back Home-> this will be triggered
+    //This is implemented on the MainActivity and mainactivity will call the corresponding action
+    OnNavigationReselectedListener
+{
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private val bottomNavController by lazy(LazyThreadSafetyMode.NONE) {

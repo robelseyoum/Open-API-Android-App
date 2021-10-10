@@ -22,7 +22,7 @@ abstract class NetworkBoundResource<ResponseObject, CacheObject, ViewStateType>(
     isNetworkAvailable: Boolean, //is there a network connection?
     isNetworkRequest: Boolean, // is this a network request
     shouldCancelIfNoInternet: Boolean, //should this job cancelled if there is no network?
-    shouldLoadFromCache: Boolean //should the cached data be loaded?
+    shouldLoadFromCache: Boolean //should the cached data be loaded? before we making a network request
 ) {
     private val TAG: String = "AppDebug"
 

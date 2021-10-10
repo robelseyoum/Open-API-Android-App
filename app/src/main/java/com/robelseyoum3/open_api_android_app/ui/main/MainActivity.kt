@@ -33,8 +33,7 @@ class MainActivity : BaseActivity(),
     OnNavigationGraphChanged,
     //Home -> UpdateBlogIcon then reselect back Home-> this will be triggered
     //This is implemented on the MainActivity and mainactivity will call the corresponding action
-    OnNavigationReselectedListener
-{
+    OnNavigationReselectedListener {
     private lateinit var bottomNavigationView: BottomNavigationView
 
     private val bottomNavController by lazy(LazyThreadSafetyMode.NONE) {
@@ -84,6 +83,18 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    private fun setupActionBar() {
+        setSupportActionBar(tool_bar)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
     override fun getNavGraphId(itemId: Int) = when (itemId) {
         R.id.nav_blog -> {
             R.navigation.nav_blog
@@ -102,18 +113,8 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    private fun setupActionBar() {
-        setSupportActionBar(tool_bar)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
-            android.R.id.home -> onBackPressed()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onGraphChange() {
+        //What needs to happen when the graph changes?
         expandAppbar()
     }
 

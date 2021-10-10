@@ -73,6 +73,7 @@ class AccountFragment : BaseAccountFragment(){
 
     override fun onResume() {
         super.onResume()
+        //this will update the cache in the background
         viewModel.setStateEvent(
             AccountStateEvent.GetAccountPropertiesEvent
         )

@@ -17,7 +17,7 @@ import dagger.android.support.DaggerFragment
 import java.lang.Exception
 import javax.inject.Inject
 
-abstract class BaseAccountFragment : DaggerFragment(){
+abstract class BaseAccountFragment : DaggerFragment() {
 
     val TAG: String = "AppDebug"
 
@@ -45,7 +45,11 @@ abstract class BaseAccountFragment : DaggerFragment(){
         }?: throw Exception("Invalid activity")
     }
 
+    /**
+     @fragmentId is id of fragment from graph to be EXCLUDED fromm action back bar nav
+     */
     private fun setupActionBarWithNavController(fragmentId: Int, activity: AppCompatActivity){
+        //on the fragment we don't want to show back arrow
         val appBarConfiguration = AppBarConfiguration(setOf(fragmentId))
         NavigationUI.setupActionBarWithNavController(
             activity,

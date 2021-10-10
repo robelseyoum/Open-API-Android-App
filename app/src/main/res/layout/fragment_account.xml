@@ -7,14 +7,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.account.AccountFragment"
     android:fillViewport="true"
-    android:background="#fff"
-    >
+    android:background="#fff">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/constraint_layout1"
-        >
+        android:id="@+id/constraint_layout1">
 
         <View android:layout_width="0.5dp"
             android:layout_height="0.5dp"

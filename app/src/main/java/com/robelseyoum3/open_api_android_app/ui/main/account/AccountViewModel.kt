@@ -6,6 +6,7 @@ import com.robelseyoum3.open_api_android_app.repository.main.AccountRepository
 import com.robelseyoum3.open_api_android_app.session.SessionManager
 import com.robelseyoum3.open_api_android_app.ui.BaseViewModel
 import com.robelseyoum3.open_api_android_app.ui.DataState
+import com.robelseyoum3.open_api_android_app.ui.auth.state.AuthStateEvent
 import com.robelseyoum3.open_api_android_app.ui.main.account.state.AccountStateEvent
 import com.robelseyoum3.open_api_android_app.ui.main.account.state.AccountStateEvent.*
 import com.robelseyoum3.open_api_android_app.ui.main.account.state.AccountViewState
@@ -70,5 +71,14 @@ class AccountViewModel @Inject constructor(
 
     fun logOut(){
         sessionManager.logout()
+    }
+
+    fun cancelActiveJobs() {
+        handlePendingData()
+        accountRepository.cancelActiveJobs()
+    }
+
+    private fun handlePendingData(){
+        setStateEvent(None)
     }
 }

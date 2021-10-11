@@ -11,6 +11,7 @@ import com.robelseyoum3.open_api_android_app.model.AccountProperties
 import com.robelseyoum3.open_api_android_app.model.AuthToken
 import com.robelseyoum3.open_api_android_app.persistence.AccountPropertiesDao
 import com.robelseyoum3.open_api_android_app.persistence.AuthTokenDao
+import com.robelseyoum3.open_api_android_app.repository.JobManager
 import com.robelseyoum3.open_api_android_app.repository.NetworkBoundResource
 import com.robelseyoum3.open_api_android_app.session.SessionManager
 import com.robelseyoum3.open_api_android_app.ui.DataState
@@ -38,10 +39,9 @@ class AuthRepository @Inject constructor(
     val sessionManager: SessionManager,
     val sharedPreferences: SharedPreferences, // this to read from the sharedpreference
     val sharedPrefsEditor: SharedPreferences.Editor // this is to write into shared preference
-) {
+) : JobManager("AuthRepository") {
 
     private val TAG: String = "AppDebug"
-    private var repositoryJob: Job? = null
 
     fun attemptLogin(email: String, password: String): LiveData<DataState<AuthViewState>>{
         val loginFieldError = LoginFields(email, password).isValidForLogin()
@@ -101,8 +101,7 @@ class AuthRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("attemptLogin", job)
             }
             //not used in this case
             override suspend fun createCacheRequestAndReturn() {
@@ -194,8 +193,7 @@ class AuthRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("attemptRegistration", job)
             }
 
             //not used in this case
@@ -244,8 +242,7 @@ class AuthRepository @Inject constructor(
                 }
 
                 override fun setJob(job: Job) {
-                    repositoryJob?.cancel()
-                    repositoryJob = job
+                    addJob("checkPreviousAuthUser", job)
                 }
 
                 override suspend fun createCacheRequestAndReturn() {
@@ -328,10 +325,10 @@ class AuthRepository @Inject constructor(
     }
 
     //here it will called from viewwmodel
-    fun cancelActiveJobs(){
-        Log.d(TAG, "AuthRepository: Cancelling on-going jobs..")
-        repositoryJob?.cancel()
-    }
+//    fun cancelActiveJobs(){
+//        Log.d(TAG, "AuthRepository: Cancelling on-going jobs..")
+//        repositoryJob?.cancel()
+//    }
 
     fun testingLoginRequest(email: String, password: String): LiveData<GenericApiResponse<LoginResponse>> {
         return openApiAuthService.login(email, password)

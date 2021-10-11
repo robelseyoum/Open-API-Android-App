@@ -8,6 +8,7 @@ import com.robelseyoum3.open_api_android_app.api.main.OpenApiMainService
 import com.robelseyoum3.open_api_android_app.model.AccountProperties
 import com.robelseyoum3.open_api_android_app.model.AuthToken
 import com.robelseyoum3.open_api_android_app.persistence.AccountPropertiesDao
+import com.robelseyoum3.open_api_android_app.repository.JobManager
 import com.robelseyoum3.open_api_android_app.repository.NetworkBoundResource
 import com.robelseyoum3.open_api_android_app.session.SessionManager
 import com.robelseyoum3.open_api_android_app.ui.DataState
@@ -26,9 +27,8 @@ class AccountRepository @Inject constructor(
     val openApiMainService: OpenApiMainService,
     val accountPropertiesDao: AccountPropertiesDao,
     val sessionManager: SessionManager
-) {
+) : JobManager("AccountRepository") {
     private val TAG: String = "AppDebug"
-    private var repositoryJob: Job? = null
 
     fun getAccountProperties(authToken: AuthToken): LiveData<DataState<AccountViewState>>{
         return  object: NetworkBoundResource<AccountProperties, AccountProperties, AccountViewState>(
@@ -61,8 +61,7 @@ class AccountRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("getAccountProperties", job)
             }
 
             //this request is used whenever the network is down and in transaction view the cache
@@ -138,10 +137,9 @@ class AccountRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
-
+                addJob("saveAccountProperties", job)
             }
+
             //Not applicable we are not looking from cache
             override suspend fun createCacheRequestAndReturn() {
             }
@@ -196,8 +194,7 @@ class AccountRepository @Inject constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob = job
+                addJob("updatePassword", job)
             }
 
             override suspend fun createCacheRequestAndReturn() {
@@ -211,11 +208,5 @@ class AccountRepository @Inject constructor(
             }
 
         }.asLiveData()
-    }
-
-
-    fun cancelActiveJobs(){
-        Log.d(TAG, "AccountRepository: cancelling on going jobs.....")
-        repositoryJob?.cancel()
     }
 }

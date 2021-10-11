@@ -13,10 +13,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.robelseyoum3.open_api_android_app.R
 import com.robelseyoum3.open_api_android_app.ui.BaseActivity
 import com.robelseyoum3.open_api_android_app.ui.auth.AuthActivity
+import com.robelseyoum3.open_api_android_app.ui.main.account.BaseAccountFragment
 import com.robelseyoum3.open_api_android_app.ui.main.account.ChangePasswordFragment
 import com.robelseyoum3.open_api_android_app.ui.main.account.UpdateAccountFragment
+import com.robelseyoum3.open_api_android_app.ui.main.blog.BaseBlogFragment
 import com.robelseyoum3.open_api_android_app.ui.main.blog.UpdateBlogFragment
 import com.robelseyoum3.open_api_android_app.ui.main.blog.ViewBlogFragment
+import com.robelseyoum3.open_api_android_app.ui.main.create_blog.BaseCreateBlogFragment
 import com.robelseyoum3.open_api_android_app.util.BottomNavController
 import com.robelseyoum3.open_api_android_app.util.BottomNavController.*
 import com.robelseyoum3.open_api_android_app.util.setUpNavigation
@@ -116,6 +119,25 @@ class MainActivity : BaseActivity(),
     override fun onGraphChange() {
         //What needs to happen when the graph changes?
         expandAppbar()
+        cancelActiveJobs()
+    }
+
+    private fun cancelActiveJobs() {
+        val fragments = bottomNavController.fragmentManager
+            .findFragmentById(bottomNavController.containerId)
+            ?.childFragmentManager
+            ?.fragments
+        fragments?.let {
+            for (fragment in it) {
+                when (fragment) {
+                    is BaseAccountFragment -> fragment.cancelActiveJobs()
+                    is BaseBlogFragment -> fragment.cancelActiveJobs()
+                    is BaseCreateBlogFragment -> fragment.cancelActiveJobs()
+                }
+            }
+        }
+        //hide progress bar
+        displayProgressBar(false)
     }
 
     override fun onReselectNavItem(navController: NavController, fragment: Fragment) =
